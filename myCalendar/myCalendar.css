@@ -51,7 +51,7 @@ body {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     overflow-x: hidden;
     /* перед запуском добавить / перед img*/
-    background: url(_img/bg.jpg) center top / contain fixed;
+    background: url(bg.jpg) center top / contain fixed;
 }
 
 
