@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ru" style="font-family: Nunito">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="calendar.css">
+</head>
+
+<body>
+  <style type="text/css">
+    @media print {
+        * {
+          font-family: "Nunito";
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+    
+        header,
+        footer,
+        .calendar-title,
+        .calendarApply,
+        .printApply,
+        .calendar-description,
+        .pauseError,
+        .dateError
+        .monthError {
+          display: none;
+        }
+    
+        .calendar-legend,
+        .calendar-control {
+            float: none;
+            margin-left: 0;
+            margin-top: 2rem;
+        }
+    
+        .calendar-line .month,
+        .calendar-line .date {
+            height: 40px;
+            line-height: 40px;
+        }
+    
+        .grey,
+        .date.grey {
+            background: linear-gradient(45deg, rgba(0, 0, 0, 0) 49.9%, grey 49.9%, grey 60%, rgba(0, 0, 0, 0) 60%), linear-gradient(45deg, grey 10%, rgba(0, 0, 0, 0) 10%);
+            background-size: 0.5em 0.5em;
+        }
+    }
+    </style>
+<main>
+  <div class="btn_test" onclick="$('#shkala').addClass('active');$('.btn_test').hide()">Пройдите тест +</div>
+   <div class="container">
+    <div class="calendar-section__top">
+      <div >
+        <h1 data-animation="fadein-down" data-animation__delay="1">Календарь приёма</h1>
+        <p class="lead" data-animation="fadein-up" data-animation__delay="2">
+          Календарь применения трансдермального эстрадиола и микронизированного прогестерона в циклическом режиме менопаузальной гормональной терапии (МГТ)
+        </p>
+      </div>
+      <div class="col-3" data-animation="fadein" data-animation__delay="4">
+        <img src="tablica.png" width="350px" alt="">
+      </div>
+    </div>
+    <section> 
+      <h2 data-animation="fadein-down" data-animation__delay="1"><span class="calendar-break">Начало приема.</span> Выберите день и месяц</h2></h2>
+    </section>
+    <section> 
+      <div data-animation="fadein" data-animation__delay="1" class="col_2">
+        <div class="form-box-imt">
+          <div class="calendar__control-item">
+            <input type="text" class="datepicker dateInput" name="date" placeholder="День*">
+            <div class="dateError">
+              Введите корректный день в формате ДД
+              <div class="close">&#10006;</div>
+            </div>
+          </div>
+          <div class="calendar__control-item">
+            <input type="text" class="monthpicker dateInput" name="date" placeholder="Месяц*">
+            <div class="monthError">
+              Введите корректный месяц в формате ММ
+              <div class="close">&#10006;</div>
+            </div>
+          </div>
+          <div class="calendar__control-item">
+            <input type="text" class="pauseInput" name="pause" placeholder="Перерыв(количество дней)*">
+          </div>
+          <span class="point">
+            По инструкции длительность перерыва составляет 7 дней.<br> Убедитесь у лечащего врача, что длительность перерыва назначена верно
+          </span>
+          <div class="calendar__control-item">
+            <label for="name">Длительность приёма Утрожестана*</label>
+              <div class="calendar__radio-wrapper">
+                <div class="calendar__input-wrapper">
+                  <input class="calendar__radio calendar__radio_12" type="radio" name="length" value="12" > 
+                  <span class="calendar__radio-label calendar__radio-label_12"> 12 дней</span><br>  
+                </div>
+                <div class="calendar__input-wrapper">
+                  <input class="calendar__radio calendar__radio_14" type="radio" name="length" value="14">
+                  <span class="calendar__radio-label calendar__radio-label_14"> 14 дней</span>
+              </div>
+            </div>
+          </div>
+          <div class="calendar__control-item calendar__action">
+            <div class="button calendarApply" id="toggleButton" type="button">
+              Отправить
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div id="hiddenText">
+      <div class="condition">
+      <section>
+       <div class="calendar-description">
+         <p>В циклическом режиме трансдермальный эстрадиол применяется с 1 по 25 день менструального
+           цикла<sup>1</sup>. С 14 по 25 день к трансдермальному эстрадиолу добавляется микронизированный
+           прогестерон. Далее следует перерыв.Циклический режим применения МГТ подразумевает наличие менструально-подобной реакции в дни перерыва.
+           Гестаген добавляется для защиты эндометрия (оболочки матки) от гиперпластических процессов.
+         <p>
+         <p>Циклический режим применения МГТ подразумевает наличие менструальноподобной реакции в дни перерыва. Гестаген добавляется для защиты эндометрия
+           (оболочки матки) от гиперпластических процессов.</p>
+ 
+         <span class="point">
+          <sup>*</sup>Первый день менструального цикла - это первый день появления кровянистых выделений
+         </span>
+       </div>
+      </section>
+      <section>
+       <div class="calendar-legend">
+         <div class="legend-element">
+           <div class="legend-circle yellow"></div>
+           <div class="legend-title">Трансдермальный эстрадиол (Э)</div>
+         </div>
+   
+         <div class="legend-element">
+           <div class="legend-circle red"></div>
+           <div class="legend-title">Трансдермальный эстрадиол + Микронизированный прогестерон (Э/У)</div>
+         </div>
+   
+         <div class="legend-element">
+           <div class="legend-circle grey"></div>
+           <div class="legend-title">Перерыв</div>
+         </div>
+       </div>
+      </section>
+      <section class="touch-icon">
+        <div class="button-container">
+          <img src="touch-icon.png">
+        </div>
+      </section>
+      <section>
+      <div class="calendar-container">
+        <div class="calendar">
+         <div class="calendar-topline">
+           <div class="month"></div>
+           <div class="dates">
+             <div class="date ">
+               <span class="date_header">1</span></div>
+             <div class="date ">
+               <span class="date_header">2</span></div>
+             <div class="date ">
+               <span class="date_header">3</span></div>
+             <div class="date ">
+               <span class="date_header">4</span></div>
+             <div class="date ">
+               <span class="date_header">5</span></div>
+             <div class="date ">
+               <span class="date_header">6</span></div>
+             <div class="date ">
+               <span class="date_header">7</span></div>
+             <div class="date ">
+               <span class="date_header">8</span></div>
+             <div class="date ">
+               <span class="date_header">9</span></div>
+             <div class="date ">
+               <span class="date_header">10</span></div>
+             <div class="date ">
+               <span class="date_header">11</span></div>
+             <div class="date ">
+               <span class="date_header">12</span></div>
+             <div class="date ">
+               <span class="date_header">13</span></div>
+             <div class="date ">
+               <span class="date_header">14</span></div>
+             <div class="date ">
+               <span class="date_header">15</span></div>
+             <div class="date ">
+               <span class="date_header">16</span></div>
+             <div class="date ">
+               <span class="date_header">17</span></div>
+             <div class="date ">
+               <span class="date_header">18</span></div>
+             <div class="date ">
+               <span class="date_header">19</span></div>
+             <div class="date ">
+               <span class="date_header">20</span></div>
+             <div class="date ">
+               <span class="date_header">21</span></div>
+             <div class="date ">
+               <span class="date_header">22</span></div>
+             <div class="date ">
+               <span class="date_header">23</span></div>
+             <div class="date ">
+               <span class="date_header">24</span></div>
+             <div class="date ">
+               <span class="date_header">25</span></div>
+             <div class="date ">
+               <span class="date_header">26</span></div>
+             <div class="date ">
+               <span class="date_header">27</span></div>
+             <div class="date ">
+               <span class="date_header">28</span></div>
+             <div class="date ">
+               <span class="date_header">29</span></div>
+             <div class="date ">
+               <span class="date_header">30</span></div>
+             <div class="date ">
+               <span class="date_header">31</span></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">декабрь</div>
+           <div class="dates">
+             <div class="date" data-date="01_12"></div>
+             <div class="date" data-date="02_12"></div>
+             <div class="date" data-date="03_12"></div>
+             <div class="date" data-date="04_12"></div>
+             <div class="date" data-date="05_12"></div>
+             <div class="date" data-date="06_12"></div>
+             <div class="date" data-date="07_12"></div>
+             <div class="date" data-date="08_12"></div>
+             <div class="date" data-date="09_12"></div>
+             <div class="date" data-date="10_12"></div>
+             <div class="date" data-date="11_12"></div>
+             <div class="date" data-date="12_12"></div>
+             <div class="date" data-date="13_12"></div>
+             <div class="date" data-date="14_12"></div>
+             <div class="date" data-date="15_12"></div>
+             <div class="date" data-date="16_12"></div>
+             <div class="date" data-date="17_12"></div>
+             <div class="date" data-date="18_12"></div>
+             <div class="date" data-date="19_12"></div>
+             <div class="date" data-date="20_12"></div>
+             <div class="date" data-date="21_12"></div>
+             <div class="date" data-date="22_12"></div>
+             <div class="date" data-date="23_12"></div>
+             <div class="date" data-date="24_12"></div>
+             <div class="date" data-date="25_12"></div>
+             <div class="date" data-date="26_12"></div>
+             <div class="date" data-date="27_12"></div>
+             <div class="date" data-date="28_12"></div>
+             <div class="date" data-date="29_12"></div>
+             <div class="date" data-date="30_12"></div>
+             <div class="date" data-date="31_12"></div>
+           </div>
+         </div>
+ 
+ 
+ 
+         <div class="calendar-line">
+           <div class="month">январь</div>
+           <div class="dates">
+             <div class="date" data-date="01_01"></div>
+             <div class="date" data-date="02_01"></div>
+             <div class="date" data-date="03_01"></div>
+             <div class="date" data-date="04_01"></div>
+             <div class="date" data-date="05_01"></div>
+             <div class="date" data-date="06_01"></div>
+             <div class="date" data-date="07_01"></div>
+             <div class="date" data-date="08_01"></div>
+             <div class="date" data-date="09_01"></div>
+             <div class="date" data-date="10_01"></div>
+             <div class="date" data-date="11_01"></div>
+             <div class="date" data-date="12_01"></div>
+             <div class="date" data-date="13_01"></div>
+             <div class="date" data-date="14_01"></div>
+             <div class="date" data-date="15_01"></div>
+             <div class="date" data-date="16_01"></div>
+             <div class="date" data-date="17_01"></div>
+             <div class="date" data-date="18_01"></div>
+             <div class="date" data-date="19_01"></div>
+             <div class="date" data-date="20_01"></div>
+             <div class="date" data-date="21_01"></div>
+             <div class="date" data-date="22_01"></div>
+             <div class="date" data-date="23_01"></div>
+             <div class="date" data-date="24_01"></div>
+             <div class="date" data-date="25_01"></div>
+             <div class="date" data-date="26_01"></div>
+             <div class="date" data-date="27_01"></div>
+             <div class="date" data-date="28_01"></div>
+             <div class="date" data-date="29_01"></div>
+             <div class="date" data-date="30_01"></div>
+             <div class="date" data-date="31_01"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">февраль</div>
+           <div class="dates">
+             <div class="date" data-date="01_02"></div>
+             <div class="date" data-date="02_02"></div>
+             <div class="date" data-date="03_02"></div>
+             <div class="date" data-date="04_02"></div>
+             <div class="date" data-date="05_02"></div>
+             <div class="date" data-date="06_02"></div>
+             <div class="date" data-date="07_02"></div>
+             <div class="date" data-date="08_02"></div>
+             <div class="date" data-date="09_02"></div>
+             <div class="date" data-date="10_02"></div>
+             <div class="date" data-date="11_02"></div>
+             <div class="date" data-date="12_02"></div>
+             <div class="date" data-date="13_02"></div>
+             <div class="date" data-date="14_02"></div>
+             <div class="date" data-date="15_02"></div>
+             <div class="date" data-date="16_02"></div>
+             <div class="date" data-date="17_02"></div>
+             <div class="date" data-date="18_02"></div>
+             <div class="date" data-date="19_02"></div>
+             <div class="date" data-date="20_02"></div>
+             <div class="date" data-date="21_02"></div>
+             <div class="date" data-date="22_02"></div>
+             <div class="date" data-date="23_02"></div>
+             <div class="date" data-date="24_02"></div>
+             <div class="date" data-date="25_02"></div>
+             <div class="date" data-date="26_02"></div>
+             <div class="date" data-date="27_02"></div>
+             <div class="date" data-date="28_02"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">март</div>
+           <div class="dates">
+             <div class="date" data-date="01_03"></div>
+             <div class="date" data-date="02_03"></div>
+             <div class="date" data-date="03_03"></div>
+             <div class="date" data-date="04_03"></div>
+             <div class="date" data-date="05_03"></div>
+             <div class="date" data-date="06_03"></div>
+             <div class="date" data-date="07_03"></div>
+             <div class="date" data-date="08_03"></div>
+             <div class="date" data-date="09_03"></div>
+             <div class="date" data-date="10_03"></div>
+             <div class="date" data-date="11_03"></div>
+             <div class="date" data-date="12_03"></div>
+             <div class="date" data-date="13_03"></div>
+             <div class="date" data-date="14_03"></div>
+             <div class="date" data-date="15_03"></div>
+             <div class="date" data-date="16_03"></div>
+             <div class="date" data-date="17_03"></div>
+             <div class="date" data-date="18_03"></div>
+             <div class="date" data-date="19_03"></div>
+             <div class="date" data-date="20_03"></div>
+             <div class="date" data-date="21_03"></div>
+             <div class="date" data-date="22_03"></div>
+             <div class="date" data-date="23_03"></div>
+             <div class="date" data-date="24_03"></div>
+             <div class="date" data-date="25_03"></div>
+             <div class="date" data-date="26_03"></div>
+             <div class="date" data-date="27_03"></div>
+             <div class="date" data-date="28_03"></div>
+             <div class="date" data-date="29_03"></div>
+             <div class="date" data-date="30_03"></div>
+             <div class="date" data-date="31_03"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">апрель</div>
+           <div class="dates">
+             <div class="date" data-date="01_04"></div>
+             <div class="date" data-date="02_04"></div>
+             <div class="date" data-date="03_04"></div>
+             <div class="date" data-date="04_04"></div>
+             <div class="date" data-date="05_04"></div>
+             <div class="date" data-date="06_04"></div>
+             <div class="date" data-date="07_04"></div>
+             <div class="date" data-date="08_04"></div>
+             <div class="date" data-date="09_04"></div>
+             <div class="date" data-date="10_04"></div>
+             <div class="date" data-date="11_04"></div>
+             <div class="date" data-date="12_04"></div>
+             <div class="date" data-date="13_04"></div>
+             <div class="date" data-date="14_04"></div>
+             <div class="date" data-date="15_04"></div>
+             <div class="date" data-date="16_04"></div>
+             <div class="date" data-date="17_04"></div>
+             <div class="date" data-date="18_04"></div>
+             <div class="date" data-date="19_04"></div>
+             <div class="date" data-date="20_04"></div>
+             <div class="date" data-date="21_04"></div>
+             <div class="date" data-date="22_04"></div>
+             <div class="date" data-date="23_04"></div>
+             <div class="date" data-date="24_04"></div>
+             <div class="date" data-date="25_04"></div>
+             <div class="date" data-date="26_04"></div>
+             <div class="date" data-date="27_04"></div>
+             <div class="date" data-date="28_04"></div>
+             <div class="date" data-date="29_04"></div>
+             <div class="date" data-date="30_04"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">май</div>
+           <div class="dates">
+             <div class="date" data-date="01_05"></div>
+             <div class="date" data-date="02_05"></div>
+             <div class="date" data-date="03_05"></div>
+             <div class="date" data-date="04_05"></div>
+             <div class="date" data-date="05_05"></div>
+             <div class="date" data-date="06_05"></div>
+             <div class="date" data-date="07_05"></div>
+             <div class="date" data-date="08_05"></div>
+             <div class="date" data-date="09_05"></div>
+             <div class="date" data-date="10_05"></div>
+             <div class="date" data-date="11_05"></div>
+             <div class="date" data-date="12_05"></div>
+             <div class="date" data-date="13_05"></div>
+             <div class="date" data-date="14_05"></div>
+             <div class="date" data-date="15_05"></div>
+             <div class="date" data-date="16_05"></div>
+             <div class="date" data-date="17_05"></div>
+             <div class="date" data-date="18_05"></div>
+             <div class="date" data-date="19_05"></div>
+             <div class="date" data-date="20_05"></div>
+             <div class="date" data-date="21_05"></div>
+             <div class="date" data-date="22_05"></div>
+             <div class="date" data-date="23_05"></div>
+             <div class="date" data-date="24_05"></div>
+             <div class="date" data-date="25_05"></div>
+             <div class="date" data-date="26_05"></div>
+             <div class="date" data-date="27_05"></div>
+             <div class="date" data-date="28_05"></div>
+             <div class="date" data-date="29_05"></div>
+             <div class="date" data-date="30_05"></div>
+             <div class="date" data-date="31_05"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">июнь</div>
+           <div class="dates">
+             <div class="date" data-date="01_06"></div>
+             <div class="date" data-date="02_06"></div>
+             <div class="date" data-date="03_06"></div>
+             <div class="date" data-date="04_06"></div>
+             <div class="date" data-date="05_06"></div>
+             <div class="date" data-date="06_06"></div>
+             <div class="date" data-date="07_06"></div>
+             <div class="date" data-date="08_06"></div>
+             <div class="date" data-date="09_06"></div>
+             <div class="date" data-date="10_06"></div>
+             <div class="date" data-date="11_06"></div>
+             <div class="date" data-date="12_06"></div>
+             <div class="date" data-date="13_06"></div>
+             <div class="date" data-date="14_06"></div>
+             <div class="date" data-date="15_06"></div>
+             <div class="date" data-date="16_06"></div>
+             <div class="date" data-date="17_06"></div>
+             <div class="date" data-date="18_06"></div>
+             <div class="date" data-date="19_06"></div>
+             <div class="date" data-date="20_06"></div>
+             <div class="date" data-date="21_06"></div>
+             <div class="date" data-date="22_06"></div>
+             <div class="date" data-date="23_06"></div>
+             <div class="date" data-date="24_06"></div>
+             <div class="date" data-date="25_06"></div>
+             <div class="date" data-date="26_06"></div>
+             <div class="date" data-date="27_06"></div>
+             <div class="date" data-date="28_06"></div>
+             <div class="date" data-date="29_06"></div>
+             <div class="date" data-date="30_06"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">июль</div>
+           <div class="dates">
+             <div class="date" data-date="01_07"></div>
+             <div class="date" data-date="02_07"></div>
+             <div class="date" data-date="03_07"></div>
+             <div class="date" data-date="04_07"></div>
+             <div class="date" data-date="05_07"></div>
+             <div class="date" data-date="06_07"></div>
+             <div class="date" data-date="07_07"></div>
+             <div class="date" data-date="08_07"></div>
+             <div class="date" data-date="09_07"></div>
+             <div class="date" data-date="10_07"></div>
+             <div class="date" data-date="11_07"></div>
+             <div class="date" data-date="12_07"></div>
+             <div class="date" data-date="13_07"></div>
+             <div class="date" data-date="14_07"></div>
+             <div class="date" data-date="15_07"></div>
+             <div class="date" data-date="16_07"></div>
+             <div class="date" data-date="17_07"></div>
+             <div class="date" data-date="18_07"></div>
+             <div class="date" data-date="19_07"></div>
+             <div class="date" data-date="20_07"></div>
+             <div class="date" data-date="21_07"></div>
+             <div class="date" data-date="22_07"></div>
+             <div class="date" data-date="23_07"></div>
+             <div class="date" data-date="24_07"></div>
+             <div class="date" data-date="25_07"></div>
+             <div class="date" data-date="26_07"></div>
+             <div class="date" data-date="27_07"></div>
+             <div class="date" data-date="28_07"></div>
+             <div class="date" data-date="29_07"></div>
+             <div class="date" data-date="30_07"></div>
+             <div class="date" data-date="31_07"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">август</div>
+           <div class="dates">
+             <div class="date" data-date="01_08"></div>
+             <div class="date" data-date="02_08"></div>
+             <div class="date" data-date="03_08"></div>
+             <div class="date" data-date="04_08"></div>
+             <div class="date" data-date="05_08"></div>
+             <div class="date" data-date="06_08"></div>
+             <div class="date" data-date="07_08"></div>
+             <div class="date" data-date="08_08"></div>
+             <div class="date" data-date="09_08"></div>
+             <div class="date" data-date="10_08"></div>
+             <div class="date" data-date="11_08"></div>
+             <div class="date" data-date="12_08"></div>
+             <div class="date" data-date="13_08"></div>
+             <div class="date" data-date="14_08"></div>
+             <div class="date" data-date="15_08"></div>
+             <div class="date" data-date="16_08"></div>
+             <div class="date" data-date="17_08"></div>
+             <div class="date" data-date="18_08"></div>
+             <div class="date" data-date="19_08"></div>
+             <div class="date" data-date="20_08"></div>
+             <div class="date" data-date="21_08"></div>
+             <div class="date" data-date="22_08"></div>
+             <div class="date" data-date="23_08"></div>
+             <div class="date" data-date="24_08"></div>
+             <div class="date" data-date="25_08"></div>
+             <div class="date" data-date="26_08"></div>
+             <div class="date" data-date="27_08"></div>
+             <div class="date" data-date="28_08"></div>
+             <div class="date" data-date="29_08"></div>
+             <div class="date" data-date="30_08"></div>
+             <div class="date" data-date="31_08"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">сентябрь</div>
+           <div class="dates">
+             <div class="date" data-date="01_09"></div>
+             <div class="date" data-date="02_09"></div>
+             <div class="date" data-date="03_09"></div>
+             <div class="date" data-date="04_09"></div>
+             <div class="date" data-date="05_09"></div>
+             <div class="date" data-date="06_09"></div>
+             <div class="date" data-date="07_09"></div>
+             <div class="date" data-date="08_09"></div>
+             <div class="date" data-date="09_09"></div>
+             <div class="date" data-date="10_09"></div>
+             <div class="date" data-date="11_09"></div>
+             <div class="date" data-date="12_09"></div>
+             <div class="date" data-date="13_09"></div>
+             <div class="date" data-date="14_09"></div>
+             <div class="date" data-date="15_09"></div>
+             <div class="date" data-date="16_09"></div>
+             <div class="date" data-date="17_09"></div>
+             <div class="date" data-date="18_09"></div>
+             <div class="date" data-date="19_09"></div>
+             <div class="date" data-date="20_09"></div>
+             <div class="date" data-date="21_09"></div>
+             <div class="date" data-date="22_09"></div>
+             <div class="date" data-date="23_09"></div>
+             <div class="date" data-date="24_09"></div>
+             <div class="date" data-date="25_09"></div>
+             <div class="date" data-date="26_09"></div>
+             <div class="date" data-date="27_09"></div>
+             <div class="date" data-date="28_09"></div>
+             <div class="date" data-date="29_09"></div>
+             <div class="date" data-date="30_09"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">октябрь</div>
+           <div class="dates">
+             <div class="date" data-date="01_10"></div>
+             <div class="date" data-date="02_10"></div>
+             <div class="date" data-date="03_10"></div>
+             <div class="date" data-date="04_10"></div>
+             <div class="date" data-date="05_10"></div>
+             <div class="date" data-date="06_10"></div>
+             <div class="date" data-date="07_10"></div>
+             <div class="date" data-date="08_10"></div>
+             <div class="date" data-date="09_10"></div>
+             <div class="date" data-date="10_10"></div>
+             <div class="date" data-date="11_10"></div>
+             <div class="date" data-date="12_10"></div>
+             <div class="date" data-date="13_10"></div>
+             <div class="date" data-date="14_10"></div>
+             <div class="date" data-date="15_10"></div>
+             <div class="date" data-date="16_10"></div>
+             <div class="date" data-date="17_10"></div>
+             <div class="date" data-date="18_10"></div>
+             <div class="date" data-date="19_10"></div>
+             <div class="date" data-date="20_10"></div>
+             <div class="date" data-date="21_10"></div>
+             <div class="date" data-date="22_10"></div>
+             <div class="date" data-date="23_10"></div>
+             <div class="date" data-date="24_10"></div>
+             <div class="date" data-date="25_10"></div>
+             <div class="date" data-date="26_10"></div>
+             <div class="date" data-date="27_10"></div>
+             <div class="date" data-date="28_10"></div>
+             <div class="date" data-date="29_10"></div>
+             <div class="date" data-date="30_10"></div>
+             <div class="date" data-date="31_10"></div>
+           </div>
+         </div>
+ 
+         <div class="calendar-line">
+           <div class="month">ноябрь</div>
+           <div class="dates">
+             <div class="date" data-date="01_11"></div>
+             <div class="date" data-date="02_11"></div>
+             <div class="date" data-date="03_11"></div>
+             <div class="date" data-date="04_11"></div>
+             <div class="date" data-date="05_11"></div>
+             <div class="date" data-date="06_11"></div>
+             <div class="date" data-date="07_11"></div>
+             <div class="date" data-date="08_11"></div>
+             <div class="date" data-date="09_11"></div>
+             <div class="date" data-date="10_11"></div>
+             <div class="date" data-date="11_11"></div>
+             <div class="date" data-date="12_11"></div>
+             <div class="date" data-date="13_11"></div>
+             <div class="date" data-date="14_11"></div>
+             <div class="date" data-date="15_11"></div>
+             <div class="date" data-date="16_11"></div>
+             <div class="date" data-date="17_11"></div>
+             <div class="date" data-date="18_11"></div>
+             <div class="date" data-date="19_11"></div>
+             <div class="date" data-date="20_11"></div>
+             <div class="date" data-date="21_11"></div>
+             <div class="date" data-date="22_11"></div>
+             <div class="date" data-date="23_11"></div>
+             <div class="date" data-date="24_11"></div>
+             <div class="date" data-date="25_11"></div>
+             <div class="date" data-date="26_11"></div>
+             <div class="date" data-date="27_11"></div>
+             <div class="date" data-date="28_11"></div>
+             <div class="date" data-date="29_11"></div>
+             <div class="date" data-date="30_11"></div>
+           </div>
+         </div>
+        </div>
+      </div>
+    </div>
+      </section>
+      <section>
+        <div class="button-container">
+          <div class="button printApply" type="button">
+            Скачать
+          </div>
+        </div>
+      </section>
+     </div>
+  </div>
+</main>
+</section>
+  <script src="../scripts/jspdf.min.js"></script>
+  <script src="../scripts/html2canvas.js"></script>
+  <script src="./Nunito.js"></script>
+  <script type="module" src="./calendar.js"></script>
+</body>
+</html>
