@@ -11,6 +11,7 @@ const printBtn = document.querySelector('.printApply');
 const calendar = document.querySelector('.calendar-description');
 const hiddenText = document.getElementById('hiddenText');
 const toggleButton = document.getElementById('toggleButton');
+const responsiveImage = document.getElementById('responsiveImage');
 
 // Проверка даты и месяца
 const validateDateAndMonth = () => {
@@ -19,14 +20,14 @@ const validateDateAndMonth = () => {
   const isDayValid = !isNaN(day) && day >= 1 && day <= 31;
   const isMonthValid = !isNaN(month) && month >= 1 && month <= 12;
 
-  if (!isDayValid) {
+  if (!isDayValid && dayInput.value.trim() !== '') {
     dateError.style.display = 'block';
     dateError.style.left = `${dayInput.offsetLeft}px`;
   } else {
     dateError.style.display = 'none';
   }
 
-  if (!isMonthValid) {
+  if (!isMonthValid && monthInput.value.trim() !== '') {
     monthError.style.display = 'block';
     monthError.style.left = `${monthInput.offsetLeft}px`;
   } else {
@@ -37,6 +38,7 @@ const validateDateAndMonth = () => {
 
   return isDayValid && isMonthValid;
 };
+
 
 applyBtn.addEventListener('click', () => {
   const pause = parseInt(pauseInput.value.split('')[0]);
@@ -105,21 +107,25 @@ applyBtn.addEventListener('click', () => {
   }
 });
 
-dayInput.addEventListener('input', function () {
-  const inputValue = this.value.replace(/\D/g, '');
-  const day = inputValue.slice(0, 2);
-  const formattedValue = `${day || '__'}`;
-  this.value = formattedValue;
+dayInput.addEventListener('blur', function () {
+  let inputValue = this.value.replace(/\D/g, '');
+  if (inputValue.length === 1) {
+    inputValue = '0' + inputValue;
+  }
+  this.value = inputValue; 
   validateDateAndMonth();
 });
 
-monthInput.addEventListener('input', function () {
-  const inputValue = this.value.replace(/\D/g, '');
-  const month = inputValue.slice(0, 2);
-  const formattedValue = `${month || '__'}`;
-  this.value = formattedValue;
+
+monthInput.addEventListener('blur', function () {
+  let inputValue = this.value.replace(/\D/g, '');
+  if (inputValue.length === 1) {
+    inputValue = '0' + inputValue;
+  }
+  this.value = inputValue; 
   validateDateAndMonth();
 });
+
 
 dayInput.addEventListener('blur', validateDateAndMonth);
 monthInput.addEventListener('blur', validateDateAndMonth);

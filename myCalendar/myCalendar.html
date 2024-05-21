@@ -50,7 +50,7 @@
 <main>
   <div class="btn_test" onclick="$('#shkala').addClass('active');$('.btn_test').hide()">Пройдите тест +</div>
    <div class="container">
-    <div class="hero__wrap">
+    <div class="calendar-section__top">
       <div class="col-3">
         <h1 data-animation="fadein-down" data-animation__delay="1">Календарь приёма</h1>
         <p class="lead" data-animation="fadein-up" data-animation__delay="2">
@@ -58,10 +58,11 @@
         </p>
       </div>
       <div class="col-3" data-animation="fadein" data-animation__delay="4">
-        <img src="woman.png"  alt="">
+        <img src="woman.png" alt="" class="large-screen-img">
+        <img src="tablica.png" alt="" class="small-screen-img">
       </div>
     </div class="hero__wrap">
-    <div class="section__wrap">
+    <div class="section__wrap noStart">
       <div data-animation="fadein" data-animation__delay="1" class="col-3">
         <h2 data-animation="fadein-down" data-animation__delay="1">Начало приема.<br> Выберите день и месяц</h2></h2>
         <section>
@@ -69,14 +70,14 @@
             <div class="calendar__control-item">
               <input type="text" class="datepicker dateInput" name="date" placeholder="День*">
               <div class="dateError">
-                Введите корректный день в формате ДД
+                Введите корректный день
                 <div class="close">&#10006;</div>
               </div>
             </div>
             <div class="calendar__control-item">
               <input type="text" class="monthpicker dateInput" name="date" placeholder="Месяц*">
               <div class="monthError">
-                Введите корректный месяц в формате ММ
+                Введите корректный месяц
                 <div class="close">&#10006;</div>
               </div>
             </div>
@@ -107,7 +108,7 @@
           </div>
         </section>
       </div>
-      <div ata-animation="fadein-right" data-animation__delay="2"class="col-3">
+      <div ata-animation="fadein-right" data-animation__delay="2"class="col-40">
         <img src="tablica.png" alt="">
       </div>
     </div class="section__wrap">

@@ -51,7 +51,7 @@ body {
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     overflow-x: hidden;
     /* перед запуском добавить / перед img*/
-    background: url(bg.jpg) center top / contain fixed;
+    background: url(_img/bg.jpg) center top / contain fixed;
 }
 
 
@@ -279,6 +279,10 @@ ul li:before {
 
 .col-33 {
     width: 27%;
+}
+
+.col-40{
+    width: 40%;
 }
 
 .col-15 {
@@ -2059,10 +2063,6 @@ html.overflow {
   min-width: 1290px;
 }
 
-.calendar-container {
-  overflow-x: auto;
-}
-
 .calendar-topline,
 .calendar-line {
   font-size: 0;
@@ -2251,9 +2251,17 @@ img {
     width: 100%;
   }
 
-  .calendar__radio-wrapper{
+.calendar__radio-wrapper{
     display: flex;
   }
+
+.noStart{
+    justify-content: space-between !important;
+}
+
+.small-screen-img{
+    display: none;
+}
 
 /* Адаптивность */
 
@@ -2285,6 +2293,10 @@ img {
 @media  (max-width: 1290px) {
     .touch-icon {
         display: block;
+      }
+
+      .calendar-container {
+        overflow-x: auto;
       }
 }
 
@@ -2481,17 +2493,9 @@ nav {
 .calendar-section__top [class*="col-3"] {
     width: 60%;
     padding-left: 0;
-    padding-right: 50px;
-    margin-top: 30px;
 }
 
-.calendar-section__top [class*="col-2"] {
-    width: 40%;
-    padding-left: 0;
-    padding-right: 0;
-    margin-top: 20px;
-}
-.section__wrap .col-2 img {
+.section__wrap .col-3 img {
     /* width: 50%; */
     margin: 20px auto;
 }
@@ -2585,10 +2589,24 @@ nav a {
     padding: 15px;
 }
 
-  .container {
+.container {
     padding: 1px 15px;
     
  }
+
+.col-40 img {
+    display: none;
+}
+
+.large-screen-img {
+    display: none;
+}
+
+.small-screen-img {
+    display: block;
+    width: 200px;
+    padding-top: 35px;
+}
 }
 
 @media screen and (max-width : 600px) {
