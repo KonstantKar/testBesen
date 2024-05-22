@@ -13,21 +13,42 @@ const hiddenText = document.getElementById('hiddenText');
 const toggleButton = document.getElementById('toggleButton');
 const responsiveImage = document.getElementById('responsiveImage');
 
+// Объект с количеством дней в каждом месяце
+const daysInMonth = {
+  1: 31,
+  2: 29,
+  3: 31,
+  4: 30,
+  5: 31,
+  6: 30,
+  7: 31,
+  8: 31,
+  9: 30,
+  10: 31,
+  11: 30,
+  12: 31
+};
+
 // Проверка даты и месяца
 const validateDateAndMonth = () => {
   const day = parseInt(dayInput.value, 10);
   const month = parseInt(monthInput.value, 10);
-  const isDayValid = !isNaN(day) && day >= 1 && day <= 31;
   const isMonthValid = !isNaN(month) && month >= 1 && month <= 12;
+  let isDayValid = !isNaN(day) && day >= 1 && day <= 31;
 
-  if (!isDayValid && dayInput.value.trim() !== '') {
+  if (isMonthValid) {
+    const maxDays = daysInMonth[month];
+    isDayValid = isDayValid && day <= maxDays;
+  }
+
+  if (!isDayValid) {
     dateError.style.display = 'block';
     dateError.style.left = `${dayInput.offsetLeft}px`;
   } else {
     dateError.style.display = 'none';
   }
 
-  if (!isMonthValid && monthInput.value.trim() !== '') {
+  if (!isMonthValid) {
     monthError.style.display = 'block';
     monthError.style.left = `${monthInput.offsetLeft}px`;
   } else {
@@ -38,7 +59,6 @@ const validateDateAndMonth = () => {
 
   return isDayValid && isMonthValid;
 };
-
 
 applyBtn.addEventListener('click', () => {
   const pause = parseInt(pauseInput.value.split('')[0]);

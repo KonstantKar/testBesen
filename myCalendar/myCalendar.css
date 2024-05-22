@@ -1853,7 +1853,7 @@ html.overflow {
   box-sizing: border-box;
   font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: var(--main);
   overflow: hidden;
   cursor: pointer;
   z-index: 10;
