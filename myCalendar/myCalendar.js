@@ -60,6 +60,13 @@ const validateDateAndMonth = () => {
   return isDayValid && isMonthValid;
 };
 
+// Проверка полей ввода
+const checkInputs = () => {
+  if (dayInput.value && monthInput.value) {
+    validateDateAndMonth();
+  }
+};
+
 applyBtn.addEventListener('click', () => {
   const pause = parseInt(pauseInput.value.split('')[0]);
   const length = parseInt(document.querySelector('[name=length]:checked').value);
@@ -133,22 +140,17 @@ dayInput.addEventListener('blur', function () {
     inputValue = '0' + inputValue;
   }
   this.value = inputValue; 
-  validateDateAndMonth();
+  checkInputs();
 });
-
 
 monthInput.addEventListener('blur', function () {
   let inputValue = this.value.replace(/\D/g, '');
   if (inputValue.length === 1) {
     inputValue = '0' + inputValue;
   }
-  this.value = inputValue; 
-  validateDateAndMonth();
+  this.value = inputValue;
+  checkInputs();
 });
-
-
-dayInput.addEventListener('blur', validateDateAndMonth);
-monthInput.addEventListener('blur', validateDateAndMonth);
 
 pauseInput.addEventListener('focus', function () {
   if (this.value === '') {
@@ -203,7 +205,7 @@ label_14.addEventListener('click', () => chooseCheckBox('calendar__radio_14'));
 
 // Открытие скрытого текста
 toggleButton.addEventListener('click', () => {
-  if (validateDateAndMonth()) {
+  if (dayInput.value && monthInput.value && validateDateAndMonth()) {
     if (hiddenText.style.display === 'none' || hiddenText.style.display === '') {
       hiddenText.style.display = 'block';
     }
