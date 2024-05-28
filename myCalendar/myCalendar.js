@@ -5,7 +5,6 @@ const monthInput = document.querySelector('.monthpicker');
 const pauseInput = document.querySelector('.pauseInput');
 const closeBtns = document.querySelectorAll('.close');
 const dateError = document.querySelector('.dateError');
-const monthError = document.querySelector('.monthError');
 const applyBtn = document.querySelector('.calendarApply');
 const printBtn = document.querySelector('.printApply');
 const calendar = document.querySelector('.calendar-description');
@@ -48,12 +47,6 @@ const validateDateAndMonth = () => {
     dateError.style.display = 'none';
   }
 
-  if (!isMonthValid) {
-    monthError.style.display = 'block';
-    monthError.style.left = `${monthInput.offsetLeft}px`;
-  } else {
-    monthError.style.display = 'none';
-  }
 
   applyBtn.disabled = !(isDayValid && isMonthValid);
 
@@ -68,14 +61,14 @@ const checkInputs = () => {
 };
 
 applyBtn.addEventListener('click', () => {
-  const pause = parseInt(pauseInput.value.split('')[0]);
+  const pause = parseInt(pauseInput.value.trim(), 10);
   const length = parseInt(document.querySelector('[name=length]:checked').value);
 
   const yellowLength = 25 - length;
 
   const dateElements = document.querySelectorAll('.date');
   dateError.style.display = 'none';
-  monthError.style.display = 'none';
+
 
   dateElements.forEach((element) => {
     if (!element.querySelector('.date_header')) {
@@ -91,8 +84,10 @@ applyBtn.addEventListener('click', () => {
 
   const day = dayInput.value;
   const month = monthInput.value;
-  const selectedDate = document.querySelector(`.date[data-date='${day}_${month}']`);
-  selectedDate?.classList?.add('dateStart');
+  const formattedDate = `${day.padStart(2, '0')}_${month.padStart(2, '0')}`;
+  const selectedDate = document.querySelector(`.date[data-date='${formattedDate}']`);
+
+  selectedDate.classList.add('dateStart');
   const index = Array.from(dateElements).indexOf(selectedDate);
 
   setYellow(index);
@@ -100,13 +95,13 @@ applyBtn.addEventListener('click', () => {
   function setYellow(ind) {
     let i = 0;
     while (i < yellowLength) {
-      dateElements[ind + i]?.classList?.add('yellow');
+      dateElements[ind + i].classList.add('yellow');
       dateElements[ind + i].innerText = 'Э';
       dateElements[ind + i].style.color = '#FFFAFA';
       i++;
     }
 
-    if (ind + i < 400) {
+    if (ind + i < dateElements.length) {
       setRed(ind + yellowLength);
     }
   }
@@ -114,8 +109,8 @@ applyBtn.addEventListener('click', () => {
   function setRed(ind) {
     let i = 0;
     while (i < length) {
-      dateElements[ind + i]?.classList?.add('red');
-      dateElements[ind + i].innerText = 'Э/У'
+      dateElements[ind + i].classList.add('red');
+      dateElements[ind + i].innerText = 'Э/П'
       dateElements[ind + i].style.color = '#FFFAFA';
       i++;
     }
@@ -126,7 +121,7 @@ applyBtn.addEventListener('click', () => {
   function setGrey(ind) {
     let i = 0;
     while (i < pause) {
-      dateElements[ind + i]?.classList?.add('grey');
+      dateElements[ind + i].classList.add('grey');
       i++;
     }
 
@@ -143,12 +138,7 @@ dayInput.addEventListener('blur', function () {
   checkInputs();
 });
 
-monthInput.addEventListener('blur', function () {
-  let inputValue = this.value.replace(/\D/g, '');
-  if (inputValue.length === 1) {
-    inputValue = '0' + inputValue;
-  }
-  this.value = inputValue;
+monthInput.addEventListener('change', function () {
   checkInputs();
 });
 
@@ -161,14 +151,15 @@ pauseInput.addEventListener('focus', function () {
 pauseInput.addEventListener('input', function () {
   const inputValue = this.value.replace(/\D/g, '');
   const days = inputValue.slice(0, 2);
-  const formattedValue = `${days || '_'}`;
-  this.value = formattedValue;
+  this.value = days; 
+  if (days === '') {
+    this.value = ''; 
+  }
 });
 
 closeBtns.forEach((btn) => {
   btn.addEventListener('click', () => {
     dateError.style.display = 'none';
-    monthError.style.display = 'none';
   });
 });
 
@@ -178,6 +169,7 @@ printBtn.addEventListener('click', () => {
 
   doc.html(elemToPrint, {
     callback: (doc) => {
+      doc.setTextColor(0, 0, 0); // Установить черный цвет для текста
       doc.setFont('Nunito', 'normal');
       doc.setFontSize(10);
       doc.text('Календарь приёма', 10, 10); // Добавление оглавления pdf
@@ -212,3 +204,4 @@ toggleButton.addEventListener('click', () => {
     calendar.scrollIntoView({ behavior: 'smooth' });
   }
 });
+//
